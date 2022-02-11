@@ -3,7 +3,6 @@
 #include<vector>
 #include<math.h>
 using namespace std;
-//fist issue
 
 class Solution {
    public:
