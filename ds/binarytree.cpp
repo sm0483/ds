@@ -7,15 +7,11 @@ class node{
 	node* left;
 	node* right;
 
-
-
-
 	node(int val){
 		data=val;
 		right=NULL;
 		left=NULL;
 	}
-
 
 };
 
@@ -34,12 +30,6 @@ int main(){
 
 	cout<<root->right->data<<endl;
 	cout<<root->left->data<<endl;
-
-
-
-
-
-
 
 
 

@@ -17,11 +17,6 @@ class node{
 
 
 
-
-
-
-
-
 void insertail(node* &head,int value){
 
 	node* n=new node(value);
@@ -86,13 +81,6 @@ void OddAEven(node* head){
 	even->next=odd->next;
 	even=even->next;
 	}
-
-
-
-
-
-
-
 
 
 
