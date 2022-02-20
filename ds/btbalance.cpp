@@ -37,6 +37,7 @@ int search(int inorder[],int start,int end,int curr){
 }
 
 
+
 Node* buildtree(int preorder[],int inorder[],int start,int end){
    static int idx=0;
    if(start>end){
@@ -61,31 +62,54 @@ int balance(Node* root){
    if(root==NULL){
 	  return 0;
    }
-   return balance(root->left)+balance(root->right)+1;
+   return max(balance(root->left),balance(root->right))+1;
 
 }
 
 bool balancetree(Node* root){
-
-   int lbalance=balance(root->left);
-   int rbalance=balance(root->right);
-   if(abs(lbalance-rbalance)<=1){
+   if(root==NULL){
 	  return true;
    }
-   return false;
+
+   int lhight=balance(root->left);
+   int lright=balance(root->right);
+   if(abs(lhight-lright)>1){
+	  return false;
+   }
+   balancetree(root->left);
+   balancetree(root->right);
+}
+int balatree(Node *root){
+   if(root==NULL){
+	  return 0;
+   
+   }
+
+   int leftcount=balatree(root->left);
+   int rcount=balatree(root->right);
+   if(abs(leftcount-rcount)>1){
+	  return -1;   
+   }
+   return max(leftcount,rcount)+1;
 
 }
+
 int main(){
    int pre[]={1,2,4,5,3,6,7};
    int ino[]={4,2,5,1,6,3,7};
    Node* root=buildtree(pre,ino,0,6);
    //inorderbuild(root);
-   // int h=maxdept(root);
+   //int h=maxdept(root);
    //cout<<h<<endl;
-   cout<<balancetree(root)<<endl;
-
-
-
+   /*
+   Node* root=new Node(1);
+   root->left=new Node(5);
+   root->right=new Node(2);
+   root->right->right=new Node(3);
+   root->right->right->right=new Node(4);
+   //cout<<balancetree(root)<<endl;
+   */
+   cout<<balatree(root)<<endl;
 
    return 0;
 }
