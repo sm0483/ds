@@ -24,7 +24,7 @@ class doublelist{
         doublelist(Node *&lhead){
             head=lhead;
         }
-
+        //to insert at head
         Node* Insert(int key,int value){
             Node *temp=head;
             Node* n=new Node(key,value);
@@ -38,7 +38,7 @@ class doublelist{
 
         }
 
-
+        //to inser at postion
         Node* Insert(int key,int value,int pos){
             Node* temp=head;
             Node* n=new Node(key,value);
@@ -55,6 +55,7 @@ class doublelist{
             return n;
 
         }
+        //delete at end
 
         int del(){
             int delkey;
@@ -75,6 +76,39 @@ class doublelist{
 
         }
 
+        //delete at postion
+
+        void del(int pos){
+            Node* temp=head;
+            int count=0;
+            while(temp->right!=NULL && count!=pos){
+                count++;
+                temp=temp->right;
+            }
+            Node* todelete=temp;
+            temp->left->right=temp->right;
+            temp->right->left=temp->left;
+            delete(todelete);
+
+
+        }
+
+
+        //travesal
+
+        int tr(int key,int &value){
+            Node* temp=head;
+            int count=0;
+            while(temp->right!=NULL && temp->key!=key){
+                count++;
+                temp=temp->right;
+            }
+            value=temp->value;
+            return count;
+        }
+
+
+
 
 
         void print(){
@@ -92,22 +126,24 @@ class doublelist{
 class Solution : public doublelist{
 
     unordered_map<int,Node*>map;
+    int size=0;
     public:
 
-    Solution(Node* lhead):doublelist(lhead){
+    Solution(Node* lhead,int len):doublelist(lhead){
+        size=len;
 
     }
 
-    void push(int key,int val,int size){
-
-        if(map.size()!=size){
+    void push(int key,int val){
+        int sizeofmap=map.size();
+        if(sizeofmap!=size){
             Node *node=Insert(key,val);
             map[key]=node;
             //              cout<<"map size: "<<map.size()<<endl;
 
 
         }
-        else if(map.size()==size){
+        else if(sizeofmap==size){
             //cout<<"**"<<endl;
             int delkey=del();
             //cout<<"*"<<endl;
@@ -119,34 +155,72 @@ class Solution : public doublelist{
 
     }
 
+    int get(int key){
+        if(!map.count(key)){
+            return -1;
+
+
+        }
+        else {
+            int value;
+            int pos=tr(key,value);
+  //          cout<<"error checking "<<endl;
+            if(pos==size){
+                del();
+            }
+            else{
+            del(pos);
+            }
+//            cout<<"error checking"<<endl;
+            Insert(key,value);
+            return value;
+
+
+        }
+
+    }
+
+
+
+
 
 };
 int main(){
     Node *head=new Node(0,0);
-    Solution s(head);
-    s.push(1,1,3);
-    s.push(2,2,3);
-    s.push(3,3,3);
+    Solution s(head,3);
+    s.push(1,1);
+    s.push(2,2);
+    s.push(3,3);
+    //s.push(4,4);
     s.print();
-    s.push(4,4,3);
-    s.push(5,5,3);
+    //cout<<"key 2: "<<s.get(2)<<endl;
+    cout<<"**"<<endl;
+    cout<<s.get(1)<<endl;
+    cout<<"----------"<<endl;
     s.print();
 
 
 }
 
 /*
+
    int main(){
    Node* head=new Node(0,0);
    doublelist dl(head);
    dl.Insert(1,1);
    dl.Insert(2,2);
    dl.Insert(3,3);
-   dl.Insert(4,4,2);
    dl.print();
+//dl.Insert(4,4,2);
+//dl.del(2);
+//    int value;
+//  int pos=dl.tr(2,value);
+dl.del(3);
+//cout<<"2: "<<value<<endl;
+//cout<<"________________"<<endl;
+dl.print();
 
 
-   }
+}
 
 */
-
