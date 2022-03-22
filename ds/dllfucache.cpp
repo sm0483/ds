@@ -34,6 +34,17 @@ Node* inode(Node *head,int key,int val,int pos){
     return n;
 
 }
+
+Node* inhead(Node* head,int key,int val){
+    Node* temp=head;
+    Node* n=new Node(key,val);
+    n->right=temp->right;
+    temp->right=n;
+    n->left=temp;
+    temp->right->left=n;
+    return n;
+
+}
 //travesal
 
 int tr(Node* head,int key,int &value){
@@ -52,23 +63,25 @@ int tr(Node* head,int key,int &value){
 int del(Node* head){
     int delkey;
     Node* temp=head;
-   // cout<<"del**"<<endl;
-    while(temp->right!=NULL){
+    // cout<<"del**"<<endl;
+    while(temp->right->right!=NULL){
         temp=temp->right;
-     //   cout<<"testin for last :"<<temp->key<<endl;
+        //   cout<<"testin for last :"<<temp->key<<endl;
 
     }
     //cout<<"del*"<<endl;
-    Node* todelete=temp;
-    temp->left->right=NULL;
-    delkey=temp->key;
+    Node* todelete =temp->right;
+    delkey=temp->right->key;
     delete(todelete);
+    temp->right=NULL;
     return delkey;
 
+
 }
+
 //to delete from any side of dll
 int delpos(Node* head,int pos){
-    int key=0;
+    int rekey=0;
     Node* temp=head;
     int count=0;
     while(temp->right!=NULL && count!=pos){
@@ -76,10 +89,18 @@ int delpos(Node* head,int pos){
         temp=temp->right;
 
     }
-    temp->left->right=temp->right;
+    //cout<<temp->key<<endl;
+    Node* todelete=temp;
+    cout<<"right and left"<<endl;
+    cout<<temp->right->key<<endl;
+    cout<<temp->left->key<<endl;
+    /*
     temp->right->left=temp->left;
-    delete(temp);
-    return key;
+    temp->left->right=temp->right;
+    rekey=temp->key;
+    delete(todelete);
+    */
+    return rekey;
 
 
 
@@ -87,7 +108,8 @@ int delpos(Node* head,int pos){
 //to print
 void print(Node* head){
     while(head!=NULL){
-        cout<<head->key<<" "<<head->value<<endl;
+        cout<<head->key<<"right: value: "<<head->value<<endl;
+        cout<<head->left->key<<endl;
         head=head->right;
 
     }
@@ -127,10 +149,14 @@ class solution{
             }
             else {
                 int value;
+                //tr working properly
                 int pos=tr(head,key,value);
                 int p=delpos(head,pos);
-                Node* node=inode(head,key,value,0);
+                /*
+                Node* node=inode(head,key,value,1);
                 return value;
+            */
+                return 0;
 
             }
 
@@ -139,7 +165,8 @@ class solution{
         void print(){
             Node* temp=head;
             while(temp!=NULL){
-                cout<<temp->key<<" : "<<temp->value<<endl;
+                //errocheck
+                cout<<"right:"<<temp->key<<endl;
                 temp=temp->right;
 
 
@@ -148,36 +175,39 @@ class solution{
         }
 
 };
+
 /*
 int main(){
     solution s;
     s.push(1,1,3);
-    s.push(2,3,3);
-    s.push(3,4,3);
+    s.push(2,2,3);
+    s.push(3,3,3);
     s.print();
-    s.push(4,5,3);
-    cout<<endl;
-    s.print();
+//    s.push(4,4,3);
+  //  s.push(5,5,3);
+    //cout<<endl;
+    //s.print();
+    cout<<s.get(1)<<endl;
 
-       int get=s.get(2);
-       cout<<get<<endl;
+    //    int get=s.get(2);
+    //  cout<<get<<endl;
     return 0;
 }
+
 */
 
-
-int main(){
-    Node* head=new Node(0,0);
-    inode(head,1,2,1);
-    inode(head,2,3,1);
-    inode(head,3,5,1);
-    inode(head,5,6,1);
-    print(head);
-    del(head);
-    cout<<endl;
-    print(head);
-
+   int main(){
+   Node* head=new Node(0,0);
+   inhead(head,1,1);
+   inhead(head,2,2);
+   inhead(head,3,3);
+   inhead(head,4,4);
+   print(head);
+   delpos(head,3);
+   cout<<endl;
+   print(head);
 
 
-}
 
+   }
+   
