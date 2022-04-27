@@ -23,12 +23,37 @@ class Test{
                 getCombination(inputArr,ds,idx,target-inputArr[idx]);
                 ds.pop_back();
             }
-            getCombination(inputArr,ds,idx+1,target);
+//            getCombination(inputArr,ds,idx+1,target);
         }
 
         void getCombination(vector<int>inputArr,int target){
-            vector<int>ds;
-            getCombination(inputArr,ds,0,target);
+            static vector<int>ds;
+            static int idx=0;
+            int size=inputArr.size();
+            if(idx>=size){
+                if(target==0){
+                    for(auto i: ds){
+                        cout<<i<<" ";
+                    }
+                    cout<<endl;
+                }
+                return;
+            }
+
+            if(target>=inputArr[idx]){
+                ds.push_back(inputArr[idx]);
+                getCombination(inputArr,target-inputArr[idx]);
+                ds.pop_back();
+
+            }
+            idx++;
+            getCombination(inputArr,target);
+            idx--;
+
+
+
+
+
         }
 };
 int main(){
