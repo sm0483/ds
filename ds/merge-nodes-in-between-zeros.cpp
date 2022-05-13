@@ -32,26 +32,27 @@ struct ListNode{
 
 class Solution {
     private:
-        void getList(ListNode* &head,int val){
+        ListNode* getList(ListNode* &head,int val){
             ListNode* n=new ListNode(val);
             if(head==NULL){
                 head=n;
-                return;
-            } 
-            ListNode* temp=head;
-            while(temp->next!=NULL){
-                temp=temp->next;
+                return n;
             }
-            temp->next=n;
+
+            head->next=n;
+            return n;
         }
     public:
         ListNode* mergeNodes(ListNode* head) {
-            ListNode* temp=head;
-            ListNode* newHead=NULL;
+            ListNode* temp=head->next;
+            ListNode* newHead=new ListNode();
+            ListNode* newTemp=newHead;
+
             int track=0;
             while(temp!=NULL){
                 if(!temp->val){
-                    getList(newHead,track);
+                    newTemp->next=getList(newTemp,track);
+                    newTemp=newTemp->next;
                     track=0;
                 }
                 track+=temp->val;
