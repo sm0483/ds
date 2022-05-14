@@ -16,9 +16,6 @@ int main(){
 	v[0]=2;
 	cout<<v[0]<<endl;
 
-//	cout<<"front"<<q.front()<<endl;
-//	cout<<q.back()<<endl;
-
 
 	return 0;
 }
